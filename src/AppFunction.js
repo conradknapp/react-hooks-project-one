@@ -10,6 +10,7 @@ const initialLocationState = {
 
 const App = () => {
   const [count, setCount] = useState(0);
+  const [isOn, setIsOn] = useState(false);
   const [location, setLocation] = useState(initialLocationState);
   const [mousePosition, setMousePosition] = useState({ x: null, y: null });
   const [status, setStatus] = useState(navigator.onLine);
@@ -58,12 +59,26 @@ const App = () => {
     setStatus(false);
   };
 
+  const toggleLight = () => {
+    setIsOn(!isOn);
+  };
+
   return (
     <>
       <h2>Counter</h2>
       <button onClick={() => setCount(prev => prev + 1)}>
         Click me {count}
       </button>
+      <br />
+      <h2>Toggle Light</h2>
+      <div
+        style={{
+          height: "50px",
+          width: "50px",
+          background: isOn ? "yellow" : "grey"
+        }}
+        onClick={toggleLight}
+      />
       <br />
       <h2>Mouse Position</h2>
       {JSON.stringify(mousePosition, null, 2)}
