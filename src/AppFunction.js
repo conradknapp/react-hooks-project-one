@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 
 const initialLocationState = {
-  altitude: null,
   latitude: null,
   longitude: null,
-  speed: null,
-  timestamp: Date.now()
+  speed: null
 };
 
 const App = () => {
   const [count, setCount] = useState(0);
   const [isOn, setIsOn] = useState(false);
-  const [location, setLocation] = useState(initialLocationState);
+  // you can in fact destructure values in state
+  const [{ latitude, longitude, speed }, setLocation] = useState(
+    initialLocationState
+  );
   const [mousePosition, setMousePosition] = useState({ x: null, y: null });
   const [status, setStatus] = useState(navigator.onLine);
   let mounted = true;
@@ -45,8 +46,7 @@ const App = () => {
       setLocation({
         latitude: event.coords.latitude,
         longitude: event.coords.longitude,
-        speed: event.coords.speed,
-        timestamp: event.timestamp
+        speed: event.coords.speed
       });
     }
   };
@@ -66,28 +66,46 @@ const App = () => {
   return (
     <>
       <h2>Counter</h2>
-      <button onClick={() => setCount(prev => prev + 1)}>
-        Click me {count}
+      <button onClick={() => setCount(prevCount => prevCount + 1)}>
+        I was clicked {count} times
       </button>
-      <br />
+
       <h2>Toggle Light</h2>
-      <div
+      {/* <div
         style={{
           height: "50px",
           width: "50px",
           background: isOn ? "yellow" : "grey"
         }}
         onClick={toggleLight}
+      /> */}
+      <img
+        src={
+          isOn
+            ? `https://icon.now.sh/highlight/fd0`
+            : `https://icon.now.sh/highlight/aaa`
+        }
+        style={{
+          height: "50px",
+          width: "50px"
+        }}
+        alt="Lightbulb"
+        onClick={toggleLight}
       />
-      <br />
+
       <h2>Mouse Position</h2>
       {JSON.stringify(mousePosition, null, 2)}
       <br />
+
       <h2>Geolocation</h2>
-      {JSON.stringify(location, null, 2)}
-      <br />
+      <p>Latitude is {latitude}</p>
+      <p>Longitude is {longitude}</p>
+      <p>Your speed is {speed ? speed : "0"}</p>
+
       <h2>Network Status</h2>
-      <strong>{status ? "Online" : "Offline"}</strong>
+      <p>
+        You are <strong>{status ? "online" : "offline"}</strong>
+      </p>
     </>
   );
 };

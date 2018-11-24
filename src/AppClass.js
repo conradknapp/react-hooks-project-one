@@ -1,8 +1,20 @@
 import React, { Component } from "react";
 
 class App extends Component {
+  state = {
+    count: 0
+  };
+
+  handleClick = () => {
+    this.setState();
+  };
+
   render() {
-    return <div>Hello world</div>;
+    return (
+      <button onClick={this.handleClick}>
+        I was clicked {this.state.count} times
+      </button>
+    );
   }
 }
 
