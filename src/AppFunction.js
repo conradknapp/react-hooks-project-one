@@ -7,7 +7,10 @@ const initialLocationState = {
 };
 
 const App = () => {
+  // calling useState allows us to create a single piece of state, as a result we can call useState multiple times
+  // in classes, the state is always an object, with useState it doesn't have to be. It can be any JavaScript type (strings, number, booleans, objects, arrays, etc)
   const [count, setCount] = useState(0);
+  // first value is the current value of the state, the second is a state setter function, allows us to the change the state. When we call it with a new value, the state will be set and the component will re-render
   const [isOn, setIsOn] = useState(false);
   // you can in fact destructure values in state
   const [{ latitude, longitude, speed }, setLocation] = useState(
@@ -63,12 +66,16 @@ const App = () => {
     setIsOn(!isOn);
   };
 
+  const handleClick = () => {
+    // setCount(steps + 1);
+    setCount(prevCount => prevCount + 1);
+  };
+
   return (
     <>
       <h2>Counter</h2>
-      <button onClick={() => setCount(prevCount => prevCount + 1)}>
-        I was clicked {count} times
-      </button>
+
+      <button onClick={handleClick}>I was clicked {count} times</button>
 
       <h2>Toggle Light</h2>
       {/* <div
